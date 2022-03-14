@@ -193,7 +193,7 @@ WITH CTE AS
           mn.product_name,
           COUNT(s.product_id) AS ProductCount,
           DENSE_RANK() OVER (PARTITION BY s.customer_id
-                             ORDER BY s.order_date) AS ProductRank
+                             ORDER BY s.order_date DESC) AS ProductRank
    FROM sales s
    INNER JOIN members m ON s.customer_id = m.customer_id
    INNER JOIN menu mn ON s.product_id = mn.product_id
