@@ -221,3 +221,23 @@ WHERE s.customer_id = m.customer_id
 GROUP BY s.customer_id
 
 ```
+9.
+``` sql
+
+WITH CTE AS
+  (SELECT s.customer_id,
+          m.product_name,
+          CASE
+              WHEN m.product_name = 'sushi' THEN SUM(m.price) * 20
+              ELSE SUM(m.price) * 10
+          END AS Points
+   FROM sales s
+   INNER JOIN menu m ON s.product_id = m.product_id
+   GROUP BY s.customer_id,
+            m.product_name)
+SELECT customer_id,
+       SUM(Points) AS TotalPoints
+FROM CTE
+GROUP BY customer_id
+
+```
