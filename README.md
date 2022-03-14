@@ -111,3 +111,18 @@ FROM sales
 GROUP BY customer_id
 
 ```
+3.
+``` sql
+
+SELECT DISTINCT s.customer_id,
+                m.product_name
+FROM sales s
+INNER JOIN menu m ON s.product_id = m.product_id
+INNER JOIN
+  (SELECT customer_id,
+          MIN(order_date) AS MinDate
+   FROM sales
+   GROUP BY customer_id) o ON s.customer_id = o.customer_id
+WHERE s.order_date = o.MinDate
+
+```
