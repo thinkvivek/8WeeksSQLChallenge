@@ -126,3 +126,17 @@ INNER JOIN
 WHERE s.order_date = o.MinDate
 
 ```
+
+4.
+``` sql
+
+SELECT TOP 1 s.product_id,
+           m.product_name,
+           COUNT(*) AS ProductCount
+FROM sales s
+INNER JOIN menu m ON s.product_id = m.product_id
+GROUP BY s.product_id,
+         m.product_name
+ORDER BY ProductCount DESC
+
+```
