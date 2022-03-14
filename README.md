@@ -241,3 +241,31 @@ FROM CTE
 GROUP BY customer_id
 
 ```
+10.
+``` sql
+
+WITH CTE AS
+  (SELECT o.customer_id,
+          product_name,
+          (CASE
+               WHEN product_name = 'sushi'
+                    OR (OrderJoinDateDiff > -1
+                        AND OrderJoinDateDiff < 8) THEN price * 20
+               ELSE price * 10
+           END) AS Points
+   FROM
+     (SELECT s.customer_id,
+             s.product_id,
+             mn.product_name,
+             mn.price,
+             DATEDIFF(DAY, join_date, order_date) AS OrderJoinDateDiff
+      FROM sales s
+      INNER JOIN members m ON s.customer_id = m.customer_id
+      INNER JOIN menu mn ON s.product_id = mn.product_id
+      WHERE order_date <= '01/31/2021') o)
+SELECT customer_id,
+       SUM(Points) AS TotalPoints
+FROM CTE
+GROUP BY customer_id
+
+```
