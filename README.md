@@ -185,3 +185,26 @@ FROM CTE
 WHERE ProductRank = 1
 
 ```
+7.
+``` sql
+
+WITH CTE AS
+  (SELECT s.customer_id,
+          mn.product_name,
+          COUNT(s.product_id) AS ProductCount,
+          DENSE_RANK() OVER (PARTITION BY s.customer_id
+                             ORDER BY s.order_date) AS ProductRank
+   FROM sales s
+   INNER JOIN members m ON s.customer_id = m.customer_id
+   INNER JOIN menu mn ON s.product_id = mn.product_id
+   WHERE s.order_date < m.join_date
+   GROUP BY s.customer_id,
+            mn.product_name,
+            s.order_date)
+SELECT customer_id,
+       product_name,
+       ProductRank
+FROM CTE
+WHERE ProductRank = 1
+
+```
