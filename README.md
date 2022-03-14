@@ -1,6 +1,8 @@
 # 8 Weeks SQL Challenge
 8 Week SQL Challenge - Week 1
 
+Case Study #1 - Danny's Diner
+
 Problem Statement can be found at
 https://8weeksqlchallenge.com/case-study-1/
 
