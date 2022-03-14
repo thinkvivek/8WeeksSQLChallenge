@@ -148,7 +148,7 @@ WITH CTE AS
           m.product_name,
           COUNT(s.product_id) AS ProductCount,
           DENSE_RANK() OVER (PARTITION BY s.customer_id
-                             ORDER BY COUNT(s.product_id) DESC) AS MaxProductCount
+                             ORDER BY COUNT(s.product_id) DESC) AS ProductRank
    FROM sales s
    INNER JOIN menu m ON s.product_id = m.product_id
    GROUP BY s.customer_id,
@@ -157,7 +157,7 @@ SELECT customer_id,
        product_name,
        ProductCount
 FROM CTE
-WHERE MaxProductCount = 1
+WHERE ProductRank = 1
 ORDER BY customer_id,
          product_name
 
