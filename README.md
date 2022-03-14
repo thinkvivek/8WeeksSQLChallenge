@@ -140,3 +140,25 @@ GROUP BY s.product_id,
 ORDER BY ProductCount DESC
 
 ```
+5.
+``` sql
+
+WITH CTE AS
+  (SELECT s.customer_id,
+          m.product_name,
+          COUNT(s.product_id) AS ProductCount,
+          DENSE_RANK() OVER (PARTITION BY s.customer_id
+                             ORDER BY COUNT(s.product_id) DESC) AS MaxProductCount
+   FROM sales s
+   INNER JOIN menu m ON s.product_id = m.product_id
+   GROUP BY s.customer_id,
+            m.product_name)
+SELECT customer_id,
+       product_name,
+       ProductCount
+FROM CTE
+WHERE MaxProductCount = 1
+ORDER BY customer_id,
+         product_name
+
+```
