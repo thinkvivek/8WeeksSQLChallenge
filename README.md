@@ -208,3 +208,16 @@ FROM CTE
 WHERE ProductRank = 1
 
 ```
+8.
+``` sql
+
+SELECT s.customer_id,
+       COUNT(s.product_id) TotalItems,
+       SUM(mn.price) AS AmountSpent
+FROM sales s
+INNER JOIN members m ON s.order_date < m.join_date
+INNER JOIN menu mn ON s.product_id = mn.product_id
+WHERE s.customer_id = m.customer_id
+GROUP BY s.customer_id
+
+```
