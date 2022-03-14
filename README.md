@@ -93,3 +93,13 @@ VALUES
 
 ```
 
+# Solutions
+
+1.
+``` sql
+
+SELECT customer_id, SUM(price) AS TotalAmount 
+FROM sales s INNER JOIN menu m ON s.product_id = m.product_id 
+GROUP BY customer_id
+
+```
