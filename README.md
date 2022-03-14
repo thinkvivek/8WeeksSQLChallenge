@@ -103,3 +103,11 @@ FROM sales s INNER JOIN menu m ON s.product_id = m.product_id
 GROUP BY customer_id
 
 ```
+2.
+``` sql
+
+SELECT customer_id, COUNT(DISTINCT order_date) AS DaysCount
+FROM sales
+GROUP BY customer_id
+
+```
