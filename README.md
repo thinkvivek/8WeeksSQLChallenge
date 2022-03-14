@@ -12,9 +12,9 @@ Danny wants to use the data to answer a few simple questions about his customers
 
 Restaurant database has 3 tables as shown below
 
-1. Sales
-2. Members
-3. Menu
+1. sales
+2. menu
+3. members
 
 Case Study Questions:
 
